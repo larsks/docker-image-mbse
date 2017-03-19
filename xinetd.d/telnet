@@ -1,0 +1,15 @@
+service telnet
+{
+        disable         = no
+        protocol        = tcp
+        instances       = 10
+        flags           = REUSE
+        log_on_failure += USERID
+        socket_type     = stream
+        user            = root
+        server          = /usr/sbin/in.telnetd
+        server_args     = -L /opt/mbse/bin/mblogin
+        wait            = no
+}
+
+

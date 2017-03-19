@@ -1,6 +1,8 @@
 FROM fedora
 ENV MBSE_ROOT=/opt/mbse
 
+RUN mkdir -p /docker
+
 RUN dnf -y install \
 	findutils \
 	gcc \
@@ -12,21 +14,34 @@ RUN dnf -y install \
 	unzip \
 	vim \
 	zip \
-	zlib-devel
+	zlib-devel \
+	mgetty \
+	net-tools \
+	telnet-server \
+	tar \
+	xinetd
 
 RUN mkdir -p /src
 WORKDIR /src
 RUN git clone https://git.code.sf.net/p/mbsebbs/code mbsebbs-code
 WORKDIR /src/mbsebbs-code
-RUN make clean; ./configure
-RUN make
-RUN rm -f checkbasic; ln -s /bin/true checkbasic
-RUN groupadd -r bbs
-RUN useradd -c "MBSE BBS Admin" -d /opt/mbse -g bbs mbse
-RUN useradd -c "MBSE BBS Login" -d /opt/mbse/home/bbs -g bbs -s /opt/mbse/bin/mbnewusr bbs
-RUN make install
 
-RUN dnf -y install \
-	mgetty \
-	net-tools \
-	telnet-server
+COPY build-mbse.sh /docker/build-mbse.sh
+RUN sh /docker/build-mbse.sh
+
+COPY create-users.sh /docker/create-users.sh
+RUN sh /docker/create-users.sh
+
+COPY install-mbse.sh /docker/install-mbse.sh
+RUN sh /docker/install-mbse.sh
+
+COPY fix-permissions.sh /docker/fix-permissions.sh
+RUN sh /docker/fix-permissions.sh
+
+COPY xinetd.d /etc/xinetd.d
+
+WORKDIR $MBSE_ROOT
+
+COPY entrypoint.sh /docker/entrypoint.sh
+ENTRYPOINT ["sh", "/docker/entrypoint.sh"]
+
