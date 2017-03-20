@@ -22,7 +22,8 @@ RUN dnf -y install \
 	xinetd \
 	supervisor \
 	passwd \
-	darkhttpd
+	darkhttpd \
+	python-pip
 
 RUN mkdir -p /src
 WORKDIR /src
@@ -48,4 +49,5 @@ ENTRYPOINT ["sh", "/docker/entrypoint.sh"]
 COPY bbs.ini /etc/supervisord.d/bbs.ini
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf", "-n"]
 
-COPY mbse /usr/lib/python2.7/site-packages/mbse
+COPY python-mbse /root/python-mbse
+RUN cd /root/python-mbse; pip install .
