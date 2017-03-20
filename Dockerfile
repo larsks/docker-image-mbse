@@ -42,6 +42,7 @@ RUN sh /docker/install-mbse.sh
 COPY xinetd.d /etc/xinetd.d
 
 WORKDIR $MBSE_ROOT
+EXPOSE 23 80 24554 60177 60179
 
 COPY entrypoint.sh /docker/entrypoint.sh
 ENTRYPOINT ["sh", "/docker/entrypoint.sh"]
