@@ -1,0 +1,10 @@
+service tfido
+{
+        socket_type     = stream
+        protocol        = tcp
+        wait            = no
+        user            = mbse
+        instances       = 10
+        server          = /opt/mbse/bin/mbcico
+        server_args     = -t itn
+}
