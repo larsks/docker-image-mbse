@@ -15,6 +15,13 @@ if [ -f "/srv/mbse/etc/users.data" ]; then
 	mbse-pwfix
 fi
 
+for keytype in rsa ecdsa ed25519; do
+	if [ ! -f /etc/ssh/ssh_host_${keytype}_key ]; then
+		echo "* Generating ${keytype} ssh key"
+		/usr/libexec/openssh/sshd-keygen ${keytype}
+	fi
+done
+
 # clear out state and lockfiles from previous instance
 rm -f /srv/mbse/var/sema/*
 rm -f /srv/mbse/var/run/*
