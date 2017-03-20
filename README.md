@@ -38,3 +38,10 @@ Log in as `bbs` to create a new account.
 You can re-run `mbsetup` at any time to make configuration changes:
 
     docker exec -it -u mbse mbse bin/mbsetup
+
+## About python-mbse
+
+The python-mbse directory contains some Python code for parsing MBSE
+data structures (currently, only `users.data`). This is used in the
+Docker image to extract information from the user database in order to
+re-generate `/etc/passwd` entries at container start time.
