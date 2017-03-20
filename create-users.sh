@@ -13,4 +13,7 @@ export MBSE_ROOT=$MBSE_ROOT
 export PATH=$MBSE_ROOT/bin:$PATH
 EOF
 
+# remove password from bbs user
+sed -i '/^bbs:/ s/:!!:/::/' /etc/shadow
+
 chown mbse:bbs $MBSE_ROOT/.bash_profile
