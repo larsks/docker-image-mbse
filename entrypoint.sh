@@ -25,6 +25,7 @@ done
 # clear out state and lockfiles from previous instance
 rm -f /srv/mbse/var/sema/*
 rm -f /srv/mbse/var/run/*
+rm -f /srv/mbse/tmp/*
 
 chown -R mbse:bbs /srv/mbse
 
