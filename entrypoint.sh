@@ -12,7 +12,7 @@ fi
 
 if [ -f "/srv/mbse/etc/users.data" ]; then
 	echo "* Restoring passwords"
-	python -m mbse.cmd.pwfix
+	mbse-pwfix
 fi
 
 rm -f /srv/mbse/var/sema/*
