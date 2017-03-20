@@ -15,7 +15,9 @@ if [ -f "/srv/mbse/etc/users.data" ]; then
 	mbse-pwfix
 fi
 
+# clear out state and lockfiles from previous instance
 rm -f /srv/mbse/var/sema/*
+rm -f /srv/mbse/var/run/*
 
 chown -R mbse:bbs /srv/mbse
 
