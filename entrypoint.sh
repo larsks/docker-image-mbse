@@ -10,8 +10,14 @@ if [ ! -d "/srv/mbse/etc" ]; then
 	cp -a $MBSE_ROOT/template/* /srv/mbse
 fi
 
+if [ -f "/srv/mbse/etc/users.data" ]; then
+	echo "* Restoring passwords"
+	python -m mbse.cmd.pwfix
+fi
+
 rm -f /srv/mbse/var/sema/*
 
 chown -R mbse:bbs /srv/mbse
 
-HOME=$MBSE_ROOT exec runuser --preserve-environment -u mbse -- "$@"
+#HOME=$MBSE_ROOT exec runuser --preserve-environment -u mbse -- "$@"
+exec "$@"
