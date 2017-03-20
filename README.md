@@ -16,7 +16,7 @@ Create a data volume for hosting your BBS data:
 
 Boot the BBS container:
 
-    docker run -v mbse:/srv/mbse -it --name mbse mbse
+    docker run -v mbse:/srv/mbse -it --name mbse oddbit/mbse
 
 Configure the BBS:
 
